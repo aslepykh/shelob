@@ -16,7 +16,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func CreateRequest(ctx context.Context, openapiData *openapi3.T, router *routers.Router, url string, authCookies []*http.Cookie, username, password, apikey, token string, extraArgs []string) ([]*http.Request, []*openapi3filter.RequestValidationInput, []*error) {
+func CreateRequest(ctx context.Context, openapiData *openapi3.T, router *routers.Router, url string, authCookies []*http.Cookie, username, password, ldapsettings, apikey, token string, extraArgs []string) ([]*http.Request, []*openapi3filter.RequestValidationInput, []*error) {
 	var (
 		httpRequests            []*http.Request
 		requestsValidationInput []*openapi3filter.RequestValidationInput
@@ -46,7 +46,7 @@ func CreateRequest(ctx context.Context, openapiData *openapi3.T, router *routers
 			for method, operation := range pathItem.Operations() {
 				pathParams, queryParams, headerParams, cookieParams := urlParams.CreatePathParams(operation)
 				contentType, bodyPayload := bodyParams.CreateBodyData(operation)
-				security.CreateSecurityParams(operation, securityScheme, queryParams, headerParams, cookieParams, username, password, apikey, token)
+				security.CreateSecurityParams(operation, securityScheme, queryParams, headerParams, cookieParams, username, password, ldapsettings, apikey, token)
 
 				httpRequest, err := http.NewRequest(method, url+basePath+path, bodyPayload)
 				if err != nil {

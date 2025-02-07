@@ -9,8 +9,9 @@ import (
 )
 
 type UserItem struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username     string `json:"username"`
+	Password     string `json:"password"`
+	LDAPSettings string `json:"ldap_settings"`
 
 	// Add any field which is required to do login operation
 
@@ -22,10 +23,11 @@ type UserItem struct {
 //     user []UserItem
 // }
 
-func CreateUser(username, password, url string) []*http.Cookie {
+func CreateUser(username, password, ldap_settings, url string) []*http.Cookie {
 	testUser := UserItem{
-		Username: username,
-		Password: password,
+		Username:     username,
+		Password:     password,
+		LDAPSettings: ldap_settings,
 	}
 
 	return testUser.getCookies(url)
@@ -41,7 +43,7 @@ func (testUser *UserItem) getCookies(url string) []*http.Cookie {
 
 	// Correct path according to your login url
 
-	httpRequest, err := http.NewRequest("POST", url+"/user/login", bodyParams)
+	httpRequest, err := http.NewRequest("POST", url+"/api/auth/login", bodyParams)
 	if err != nil {
 		log.Error("auth.go	Failed to create http request: ", err)
 	}

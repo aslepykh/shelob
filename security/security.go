@@ -8,7 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func CreateSecurityParams(operation *openapi3.Operation, securityScheme *openapi3.SecuritySchemes, queryParams *url.Values, headerParams, cookieParams map[string]interface{}, username, password, apikey, token string) {
+func CreateSecurityParams(operation *openapi3.Operation, securityScheme *openapi3.SecuritySchemes, queryParams *url.Values, headerParams, cookieParams map[string]interface{}, username, password, ldapsettings, apikey, token string) {
 	if operation.Security != nil {
 		security := *operation.Security
 		for _, items := range security {

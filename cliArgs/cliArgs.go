@@ -8,11 +8,12 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func ParseCliArgs() (string, string, string, string, string, string, string, bool, time.Duration, []string) {
+func ParseCliArgs() (string, string, string, string, string, string, string, string, bool, time.Duration, []string) {
 	spec := flag.String("spec", "", "openapi file specification (Required)")
 	targetURL := flag.String("url", "", "target URL (Required)")
 	username := flag.String("user", "", "username (Basic auth)")
 	password := flag.String("password", "", "password (Basic auth)")
+	ldapsettings := flag.String("ldapsettings", "", "set ot 0")
 	apikey := flag.String("apikey", "", "api key for auth")
 	token := flag.String("token", "", "token (Bearer auth)")
 	outputDir := flag.String("output", "fuzzer_output", "output directory")
@@ -35,5 +36,5 @@ func ParseCliArgs() (string, string, string, string, string, string, string, boo
 
 	log.Info("[+++] cli arguments are parsed")
 
-	return *spec, *targetURL, *username, *password, *apikey, *token, *outputDir, *detailedOutput, *duration, extraArgs
+	return *spec, *targetURL, *username, *password, *ldapsettings, *apikey, *token, *outputDir, *detailedOutput, *duration, extraArgs
 }
